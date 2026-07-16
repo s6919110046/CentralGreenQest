@@ -1,0 +1,105 @@
+CENTRAL GREEN QUEST — คู่มือเชื่อมรายงาน Google Sheets และ Excel
+=================================================================
+
+เวอร์ชันนี้แก้ไขแล้ว
+-------------------
+1. แก้ภาพกระดาษทิชชู่ให้มองเห็นชัดขึ้น
+2. แบบฟอร์มใหม่:
+   - ชื่อ
+   - นามสกุล
+   - รหัสพนักงาน
+   - สาขา
+   - เบอร์โทรศัพท์สำหรับรับคะแนน The1
+   - ไอเดียด้านความยั่งยืน ไม่เกิน 500 ตัวอักษร
+3. เก็บคำตอบและคะแนนลง Google Sheets
+4. Google Apps Script ตรวจเฉลยและคำนวณคะแนนเอง
+5. ดาวน์โหลดรายงานเป็น Excel ได้
+
+ทดลองเกม
+--------
+1. แตก ZIP
+2. เปิด index.html
+3. หากยังไม่ตั้งค่า Google Sheets เกมจะทำงานในโหมดทดลอง
+4. รูปทิชชู่ใช้ไฟล์ assets/tissue-paper.jpg
+
+สร้าง Google Sheets
+-------------------
+1. สร้าง Google Sheets ใหม่
+2. คัดลอก Spreadsheet ID จาก URL:
+   https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit
+3. ในชีตเลือก Extensions > Apps Script
+4. เปิดไฟล์ google-apps-script/Code.gs
+5. คัดลอกทั้งหมดไปวางใน Apps Script
+6. เปลี่ยน:
+   const SPREADSHEET_ID = "PUT_YOUR_GOOGLE_SHEET_ID_HERE";
+   เป็น ID จริง
+7. Save
+8. เลือกฟังก์ชัน setupSheets แล้วกด Run
+9. อนุญาตสิทธิ์
+
+Deploy Web App
+--------------
+1. Apps Script > Deploy > New deployment
+2. Select type > Web app
+3. Execute as: Me
+4. Who has access: Anyone
+5. Deploy
+6. คัดลอก URL ที่ลงท้ายด้วย /exec
+
+เชื่อมเกมกับ Google Sheets
+--------------------------
+1. เปิด config.js
+2. ใส่ URL:
+   API_URL: "https://script.google.com/macros/s/....../exec",
+3. สำหรับงานจริงเปลี่ยน:
+   REQUIRE_ONLINE_REPORTING: true,
+4. บันทึกไฟล์
+5. นำเว็บไซต์ขึ้น GitHub Pages / Netlify / Vercel
+6. ทดลองลงทะเบียนและเล่น
+
+Google Sheets จะมี
+------------------
+Participants:
+- ข้อมูลผู้เล่น
+- ไอเดียด้านความยั่งยืน
+- คะแนนเกม 1 และเกม 2
+- สถานะเล่นจบ
+- คะแนนรวม
+- สถานะคะแนน The1
+
+Game Events:
+- คำตอบทุกครั้ง
+- ขยะชิ้นใด
+- เลือกถังใด
+- ถูกหรือผิด
+- คะแนนจากเซิร์ฟเวอร์
+- จำนวนครั้งที่ตอบ
+
+Dashboard:
+- จำนวนผู้ลงทะเบียน
+- จำนวนผู้เล่นจบแต่ละเกม
+- คะแนนเฉลี่ย
+- สรุปแยกสาขา
+
+ป้องกันการกรอกคะแนนเอง
+----------------------
+ผู้เล่นไม่มีช่องกรอกคะแนน
+เว็บไซต์ส่งเฉพาะ Item ID และถังที่เลือก
+Google Apps Script ตรวจเฉลยและคำนวณคะแนนเอง
+ควรใช้คะแนนใน Google Sheets เป็นคะแนนทางการ
+
+ดาวน์โหลดเป็น Excel
+-------------------
+Google Sheets > File > Download > Microsoft Excel (.xlsx)
+
+แก้รายชื่อสาขา
+--------------
+เปิด config.js แล้วแก้ BRANCHES
+
+ลงทะเบียนซ้ำ
+------------
+ค่าเริ่มต้นไม่อนุญาตรหัสพนักงานซ้ำ:
+const ALLOW_DUPLICATE_EMPLOYEE_ID = false;
+
+ช่วงทดสอบสามารถเปลี่ยนเป็น true
+ก่อนใช้งานจริงควรเปลี่ยนกลับเป็น false
