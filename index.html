@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#55a94c" />
+  <title>Central Green Quest — เกมแยกขยะ 2 โหมด</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app" class="app-shell">
+
+    <!-- ลงทะเบียน -->
+    <section id="registrationScreen" class="screen overlay-screen">
+      <div class="panel registration-panel">
+        <div class="logo-bubble">♻️</div>
+        <p class="eyebrow">CENTRAL GREEN QUEST</p>
+        <h1>ลงทะเบียนก่อนเริ่มเล่น</h1>
+        <p class="lead">ใช้เพียงชื่อ เบอร์โทรศัพท์ และวันเดือนปีเกิด</p>
+
+        <form id="registrationForm" novalidate>
+          <label>
+            ชื่อ–นามสกุล
+            <input id="fullName" type="text" maxlength="80"
+                   autocomplete="name" placeholder="กรอกชื่อ–นามสกุล" required />
+          </label>
+
+          <label>
+            เบอร์โทรศัพท์
+            <input id="phone" type="tel" inputmode="numeric" maxlength="10"
+                   autocomplete="tel" placeholder="เช่น 0812345678" required />
+          </label>
+
+          <label>
+            วันเดือนปีเกิด
+            <input id="birthDate" type="date" required />
+          </label>
+
+          <p id="registerError" class="form-error" role="alert"></p>
+          <button type="submit" class="primary-button">ลงทะเบียน</button>
+        </form>
+
+        <p class="privacy-note">
+          ข้อมูลเวอร์ชันทดลองจะบันทึกเฉพาะในเบราว์เซอร์เครื่องนี้
+        </p>
+      </div>
+    </section>
+
+    <!-- หน้าเลือกเกม -->
+    <section id="menuScreen" class="screen menu-screen hidden">
+      <header class="menu-header">
+        <div>
+          <p class="eyebrow light">WELCOME</p>
+          <h1>สวัสดี <span id="menuPlayerName">ผู้เล่น</span></h1>
+          <p>เลือกเกมที่ต้องการเล่น</p>
+        </div>
+        <button id="menuSoundButton" class="round-button" type="button"
+                aria-label="เปิดหรือปิดเสียง">🔊</button>
+      </header>
+
+      <div class="mode-list">
+        <article class="mode-card">
+          <img src="assets/plastic_bottle.jpg" alt="ขวดน้ำพลาสติก" />
+          <div class="mode-overlay"></div>
+          <div class="mode-content">
+            <span class="mode-number">GAME 1</span>
+            <h2>ภารกิจขยะร่วง</h2>
+            <p>รีบเลือกถังให้ถูกก่อนขยะตกถึงพื้น</p>
+            <div class="best-line">
+              คะแนนสูงสุด: <strong id="fallBestMenu">0</strong>
+            </div>
+            <button id="openFallGameButton" class="mode-button">เล่นเกมที่ 1</button>
+          </div>
+        </article>
+
+        <article class="mode-card">
+          <img src="assets/food_scraps.jpg" alt="เศษอาหาร" />
+          <div class="mode-overlay second"></div>
+          <div class="mode-content">
+            <span class="mode-number">GAME 2</span>
+            <h2>ฝึกเลือกถัง</h2>
+            <p>ดูภาพขยะ เลือกคำตอบ และเรียนรู้เฉลย</p>
+            <div class="best-line">
+              คะแนนสูงสุด: <strong id="quizBestMenu">0</strong>/100
+            </div>
+            <button id="openQuizGameButton" class="mode-button orange">เล่นเกมที่ 2</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="menu-actions">
+        <button id="howToPlayButton" class="secondary-button">วิธีเล่นและประเภทถัง</button>
+        <button id="changePlayerButton" class="text-button">เปลี่ยนผู้เล่น</button>
+      </div>
+    </section>
+
+    <!-- วิธีเล่น -->
+    <section id="helpScreen" class="screen overlay-screen hidden">
+      <div class="panel help-panel">
+        <button id="closeHelpButton" class="close-button" aria-label="ปิด">×</button>
+        <h1>วิธีเล่น</h1>
+
+        <div class="help-block">
+          <h2>เกมที่ 1: ภารกิจขยะร่วง</h2>
+          <p>ขยะจะร่วงจากด้านบน กดถังที่ถูกต้องก่อนขยะตกถึงพื้น</p>
+          <ul>
+            <li>ตอบถูก +10 คะแนน</li>
+            <li>ตอบผิด −5 คะแนน และเสีย 1 หัวใจ</li>
+            <li>ปล่อยขยะตกถึงพื้น เสีย 1 หัวใจ</li>
+            <li>มี 3 หัวใจ เล่นได้สูงสุด 60 วินาที</li>
+          </ul>
+        </div>
+
+        <div class="help-block">
+          <h2>เกมที่ 2: ฝึกเลือกถัง</h2>
+          <p>ดูภาพขยะทีละชิ้น เลือกถัง จากนั้นอ่านเฉลยและเหตุผล</p>
+        </div>
+
+        <div class="mini-bin-grid">
+          <div><img src="assets/bin_recycle.png" alt="" /><b>เหลือง</b><span>รีไซเคิล</span></div>
+          <div><img src="assets/bin_organic.png" alt="" /><b>เขียว</b><span>อินทรีย์</span></div>
+          <div><img src="assets/bin_general.png" alt="" /><b>น้ำเงิน</b><span>ทั่วไป</span></div>
+          <div><img src="assets/bin_hazardous.png" alt="" /><b>แดง</b><span>อันตราย</span></div>
+          <div><img src="assets/bin_burnable.png" alt="" /><b>เทา</b><span>เชื้อเพลิง</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- เกมที่ 1 -->
+    <section id="fallGameScreen" class="screen game-screen hidden">
+      <header class="game-hud">
+        <button id="fallBackButton" class="hud-button" aria-label="กลับหน้าเลือกเกม">‹</button>
+        <div class="player-hud">
+          <small>ผู้เล่น</small>
+          <strong id="fallPlayerName">—</strong>
+        </div>
+        <div>
+          <small>คะแนน</small>
+          <strong id="fallScore">0</strong>
+        </div>
+        <div>
+          <small>เวลา</small>
+          <strong><span id="fallTime">60</span>s</strong>
+        </div>
+        <button id="fallSoundButton" class="hud-button" aria-label="เปิดหรือปิดเสียง">🔊</button>
+      </header>
+
+      <div id="fallFeedback" class="feedback" aria-live="assertive"></div>
+
+      <div id="fallZone" class="fall-zone">
+        <div id="fallingItem" class="falling-item hidden">
+          <img id="fallingImage" src="" alt="" />
+          <span id="fallingLabel"></span>
+        </div>
+      </div>
+
+      <div id="fallLives" class="lives">❤️ ❤️ ❤️</div>
+
+      <div id="fallBins" class="bins">
+        <button class="bin-button" data-game="fall" data-bin="recycle">
+          <img src="assets/bin_recycle.png" alt="ถังขยะรีไซเคิล" />
+          <span>รีไซเคิล</span><kbd>1</kbd>
+        </button>
+        <button class="bin-button" data-game="fall" data-bin="organic">
+          <img src="assets/bin_organic.png" alt="ถังขยะอินทรีย์" />
+          <span>อินทรีย์</span><kbd>2</kbd>
+        </button>
+        <button class="bin-button" data-game="fall" data-bin="general">
+          <img src="assets/bin_general.png" alt="ถังขยะทั่วไป" />
+          <span>ทั่วไป</span><kbd>3</kbd>
+        </button>
+        <button class="bin-button" data-game="fall" data-bin="hazardous">
+          <img src="assets/bin_hazardous.png" alt="ถังขยะอันตราย" />
+          <span>อันตราย</span><kbd>4</kbd>
+        </button>
+        <button class="bin-button" data-game="fall" data-bin="burnable">
+          <img src="assets/bin_burnable.png" alt="ถังขยะเชื้อเพลิง" />
+          <span>เชื้อเพลิง</span><kbd>5</kbd>
+        </button>
+      </div>
+    </section>
+
+    <!-- เกมที่ 2 -->
+    <section id="quizGameScreen" class="screen quiz-screen hidden">
+      <header class="game-hud">
+        <button id="quizBackButton" class="hud-button" aria-label="กลับหน้าเลือกเกม">‹</button>
+        <div class="player-hud">
+          <small>ผู้เล่น</small>
+          <strong id="quizPlayerName">—</strong>
+        </div>
+        <div>
+          <small>คะแนน</small>
+          <strong id="quizScore">0</strong>
+        </div>
+        <div>
+          <small>ข้อ</small>
+          <strong><span id="quizNumber">1</span>/10</strong>
+        </div>
+        <button id="quizSoundButton" class="hud-button" aria-label="เปิดหรือปิดเสียง">🔊</button>
+      </header>
+
+      <div class="quiz-progress-track">
+        <div id="quizProgress" class="quiz-progress"></div>
+      </div>
+
+      <div class="quiz-content">
+        <p class="quiz-prompt">ขยะชิ้นนี้ควรใส่ถังใด?</p>
+
+        <div class="quiz-item-card">
+          <img id="quizImage" src="" alt="" />
+          <h2 id="quizItemName"></h2>
+        </div>
+
+        <div id="quizFeedback" class="quiz-feedback hidden" aria-live="assertive">
+          <strong id="quizFeedbackTitle"></strong>
+          <p id="quizExplanation"></p>
+        </div>
+
+        <button id="quizNextButton" class="primary-button hidden">ข้อต่อไป</button>
+      </div>
+
+      <div id="quizBins" class="bins quiz-bins">
+        <button class="bin-button" data-game="quiz" data-bin="recycle">
+          <img src="assets/bin_recycle.png" alt="ถังขยะรีไซเคิล" />
+          <span>รีไซเคิล</span><kbd>1</kbd>
+        </button>
+        <button class="bin-button" data-game="quiz" data-bin="organic">
+          <img src="assets/bin_organic.png" alt="ถังขยะอินทรีย์" />
+          <span>อินทรีย์</span><kbd>2</kbd>
+        </button>
+        <button class="bin-button" data-game="quiz" data-bin="general">
+          <img src="assets/bin_general.png" alt="ถังขยะทั่วไป" />
+          <span>ทั่วไป</span><kbd>3</kbd>
+        </button>
+        <button class="bin-button" data-game="quiz" data-bin="hazardous">
+          <img src="assets/bin_hazardous.png" alt="ถังขยะอันตราย" />
+          <span>อันตราย</span><kbd>4</kbd>
+        </button>
+        <button class="bin-button" data-game="quiz" data-bin="burnable">
+          <img src="assets/bin_burnable.png" alt="ถังขยะเชื้อเพลิง" />
+          <span>เชื้อเพลิง</span><kbd>5</kbd>
+        </button>
+      </div>
+    </section>
+
+    <!-- ผลลัพธ์ -->
+    <section id="resultScreen" class="screen overlay-screen hidden">
+      <div class="panel result-panel">
+        <div id="resultEmoji" class="result-emoji">🏆</div>
+        <p id="resultMode" class="eyebrow"></p>
+        <h1 id="resultTitle">จบเกมแล้ว</h1>
+        <p id="resultMessage"></p>
+
+        <div class="result-grid">
+          <div><span>คะแนนรอบนี้</span><strong id="resultScore">0</strong></div>
+          <div><span>คะแนนสูงสุด</span><strong id="resultBest">0</strong></div>
+          <div><span id="resultExtraLabel">ตอบถูก</span><strong id="resultExtra">0</strong></div>
+        </div>
+
+        <button id="resultReplayButton" class="primary-button">เล่นอีกครั้ง</button>
+        <button id="resultMenuButton" class="secondary-button">เลือกเกมอื่น</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
