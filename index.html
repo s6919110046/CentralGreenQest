@@ -65,7 +65,7 @@
           <div class="mode-content">
             <span class="mode-number">GAME 1</span>
             <h2>ภารกิจขยะร่วง</h2>
-            <p>รีบเลือกถังให้ถูกก่อนขยะตกถึงพื้น</p>
+            <p>ตอบให้ถูกครบทุกชิ้น ข้อที่ตอบผิดจะกลับมาใหม่</p>
             <div class="best-line">
               คะแนนสูงสุด: <strong id="fallBestMenu">0</strong>
             </div>
@@ -104,10 +104,10 @@
           <h2>เกมที่ 1: ภารกิจขยะร่วง</h2>
           <p>ขยะจะร่วงจากด้านบน กดถังที่ถูกต้องก่อนขยะตกถึงพื้น</p>
           <ul>
-            <li>ตอบถูก +10 คะแนน</li>
-            <li>ตอบผิด −5 คะแนน และเสีย 1 หัวใจ</li>
-            <li>ปล่อยขยะตกถึงพื้น เสีย 1 หัวใจ</li>
-            <li>มี 3 หัวใจ เล่นได้สูงสุด 60 วินาที</li>
+            <li>ตอบถูก +10 คะแนน และขยะชิ้นนั้นจะไม่กลับมาอีก</li>
+            <li>ตอบผิด −5 คะแนน และขยะชิ้นนั้นจะกลับมาใหม่ภายหลัง</li>
+            <li>ถ้าปล่อยขยะตกถึงพื้น ขยะชิ้นนั้นจะกลับมาใหม่</li>
+            <li>ไม่มีการจับเวลา เกมจบเมื่อตอบถูกครบทั้ง 10 ชิ้น</li>
           </ul>
         </div>
 
@@ -139,8 +139,8 @@
           <strong id="fallScore">0</strong>
         </div>
         <div>
-          <small>เวลา</small>
-          <strong><span id="fallTime">60</span>s</strong>
+          <small>สำเร็จ</small>
+          <strong><span id="fallCompleted">0</span>/10</strong>
         </div>
         <button id="fallSoundButton" class="hud-button" aria-label="เปิดหรือปิดเสียง">🔊</button>
       </header>
@@ -154,7 +154,7 @@
         </div>
       </div>
 
-      <div id="fallLives" class="lives">❤️ ❤️ ❤️</div>
+      <div id="fallStatus" class="lives">เหลือ 10 ชิ้นที่ต้องตอบให้ถูก</div>
 
       <div id="fallBins" class="bins">
         <button class="bin-button" data-game="fall" data-bin="recycle">
